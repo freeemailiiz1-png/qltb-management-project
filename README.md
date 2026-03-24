@@ -16,9 +16,9 @@ Dự án **IT43_QLTB** là ứng dụng **Windows Forms (C#)** phục vụ quả
 
 ## 2. Công nghệ sử dụng
 
-- **Ngôn ngữ/Framework**: C# – Windows Forms, .NET Framework **4.7.2**.  [oai_citation:0‡GitHub](https://github.com/kienndt0808/IT43_QLTB/blob/main/App.config)  
+- **Ngôn ngữ/Framework**: C# – Windows Forms, .NET Framework **4.7.2**.  
 - **CSDL**: Microsoft SQL Server
-- **ORM**: Entity Framework (có thư mục package EF trong repo).  [oai_citation:1‡GitHub](https://github.com/kienndt0808/IT43_QLTB)  
+- **ORM**: Entity Framework (có thư mục package EF trong repo). 
 
 ---
 
@@ -37,7 +37,7 @@ Dự án tổ chức theo các màn hình quản trị (Form) tương ứng các
 - **Xem Lịch sử hệ thống** (`QLLichSuHeThong`)
 - **Xem Lịch sử thiết bị** (`QLLichSuThietBi`)
 - Màn hình chính: `Form1`  
-(Danh sách file Form có thể xem ngay trong thư mục gốc repo).  [oai_citation:2‡GitHub](https://github.com/kienndt0808/IT43_QLTB)  
+(Danh sách file Form có thể xem ngay trong thư mục gốc repo).  
 
 ---
 
@@ -48,13 +48,12 @@ Repo có các thư mục phổ biến theo hướng phân lớp:
 - `DTO/`: lớp dữ liệu (Data Transfer Object)
 - `DAO/`: lớp truy xuất dữ liệu (Data Access Object)
 - `Common/`: hàm tiện ích dùng chung
-- Các Form WinForms: `QL*.cs`, `Form1.cs`, `PopupUserInfor.cs` …  [oai_citation:3‡GitHub](https://github.com/kienndt0808/IT43_QLTB)  
-
+- Các Form WinForms: `QL*.cs`, `Form1.cs`, `PopupUserInfor.cs` …  
 ---
 
 ## 5. Thiết kế cơ sở dữ liệu (từ file `qltb.sql`)
 
-File script CSDL nằm trong repo: `qltb.sql`.  [oai_citation:4‡GitHub](https://github.com/kienndt0808/IT43_QLTB)  
+File script CSDL nằm trong repo: `qltb.sql`.  
 
 ### Nhóm bảng danh mục
 - `tblTrangThai`: danh mục trạng thái dùng chung.
@@ -71,7 +70,6 @@ File script CSDL nằm trong repo: `qltb.sql`.  [oai_citation:4‡GitHub](https:
 ### Nhóm bảng lịch sử – truy vết
 - `tblLichSuThietBi`: ghi nhận thay đổi liên quan thiết bị (cán bộ cũ/mới, đơn vị cũ/mới, hành động, thời điểm…).
 - `tblLichSuHeThong`: nhật ký tác động hệ thống theo user/hành động/bảng/bản ghi.
-- *(Ngoài danh sách 10 bảng bạn nêu, trong script còn có `tblQuyen` để quản lý quyền theo trạng thái.)*
 
 ---
 
@@ -86,10 +84,10 @@ File script CSDL nằm trong repo: `qltb.sql`.  [oai_citation:4‡GitHub](https:
 ### 6.2 Tạo cơ sở dữ liệu
 1. Mở SQL Server Management Studio (SSMS).
 2. Tạo database tên: `QLTB`
-3. Chạy script: `qltb.sql` để tạo bảng và dữ liệu liên quan.  [oai_citation:5‡GitHub](https://github.com/kienndt0808/IT43_QLTB/blob/main/qltb.sql)  
+3. Chạy script: `qltb.sql` để tạo bảng và dữ liệu liên quan.  
 
 ### 6.3 Cấu hình chuỗi kết nối
-Trong `App.config`, dự án đang dùng connection string tên **`QLTB`** và kết nối SQL Server theo dạng integrated security.  [oai_citation:6‡GitHub](https://github.com/kienndt0808/IT43_QLTB/blob/main/App.config)  
+Trong `App.config`, dự án đang dùng connection string tên **`QLTB`** và kết nối SQL Server theo dạng integrated security.  
 
 Ví dụ hiện tại:
 ```xml
