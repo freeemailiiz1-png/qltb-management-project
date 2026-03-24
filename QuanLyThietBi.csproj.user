@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupUserInfor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLCanBo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLCapDonVi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLDonVi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLHanhDong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLLichSuHeThong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLLichSuThietBi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLLoaiThietBi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLQuyen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLThietBi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLTrangThai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="QLUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,149 @@
+**BÁO CÁO PHÂN TÍCH NGHIỆP VỤ HỆ THỐNG**  
+**PHÁT TRIỂN NỀN TẢNG QUẢN LÝ THIẾT BỊ CHUYÊN DÙNG**  
+**DÀNH CHO MÔI TRƯỜNG CƠ QUAN NHÀ NƯỚC**
+
+**Tác giả:** Chuyên gia lập trình & phân tích hệ thống  
+**Ngày lập:** Tháng 3 năm 2026
+
+### 1. Giới thiệu
+
+**Mục tiêu của báo cáo**  
+Báo cáo này phân tích chi tiết nghiệp vụ quản lý thiết bị chuyên dùng (máy móc, thiết bị tin học, thiết bị văn phòng, thiết bị chuyên ngành...) dựa trên cơ sở dữ liệu được cung cấp của hệ thống **QLTB** (Quản lý Thiết bị).  
+
+Hệ thống hướng tới việc đáp ứng các yêu cầu quản lý **tài sản công** theo quy định pháp luật Việt Nam hiện hành (Luật Quản lý, sử dụng tài sản công, các Nghị định hướng dẫn mới nhất 2025, Quyết định 15/2025/QĐ-TTg về tiêu chuẩn định mức sử dụng máy móc thiết bị, Thông tư về khấu hao TSCĐ...).  
+
+Đặc thù môi trường **cơ quan nhà nước** đòi hỏi:  
+- Tuân thủ nghiêm ngặt phân cấp hành chính (trung ương → tỉnh/thành → huyện/quận → xã/phường)  
+- Quản lý vòng đời thiết bị, lịch sử giao nhận, theo dõi trách nhiệm cá nhân hóa (gắn với cán bộ)  
+- Minh bạch, truy xuất nguồn gốc, kiểm kê định kỳ, cảnh báo hết hạn/vòng đời  
+- Phân quyền chặt chẽ theo cấp đơn vị và vai trò người dùng
+
+### 2. Tổng quan mô hình dữ liệu & các thực thể chính
+
+Cơ sở dữ liệu bao gồm 12 bảng chính, tập trung vào 4 nhóm nghiệp vụ cốt lõi:
+
+| Nhóm nghiệp vụ              | Bảng chính liên quan                          | Mục đích chính |
+|-----------------------------|-----------------------------------------------|----------------|
+| Quản lý tổ chức & phân cấp  | tblDonVi, tblCapDV                            | Cây đơn vị hành chính đa cấp |
+| Quản lý cán bộ & người dùng | tblCanBo, tblUser                             | Người sử dụng thiết bị & tài khoản hệ thống |
+| Quản lý danh mục thiết bị   | tblLoaiThietBi, tblThietBi, tblTrangThai     | Phân loại, trạng thái, vòng đời thiết bị |
+| Theo dõi lịch sử & kiểm soát| tblLichSuThietBi, tblLichSuHeThong, tblHanhDong | Audit trail thiết bị & hệ thống |
+| Phân quyền                  | tblQuyen                                      | Quyền hạn người dùng (chưa rõ chi tiết liên kết) |
+
+**Mối quan hệ chính (Foreign Key):**  
+- tblThietBi → tblLoaiThietBi, tblCanBo, tblDonVi, tblTrangThai  
+- tblLichSuThietBi → tblThietBi, tblCanBo (cũ/mới), tblDonVi (cũ/mới), tblHanhDong  
+- tblDonVi → tự tham chiếu (DonViChaID), tblCapDV, tblTrangThai  
+- tblUser → tblDonVi, tblCapDV, tblTrangThai  
+- tblLichSuHeThong → tblUser, tblHanhDong  
+
+### 3. Phân tích chi tiết nghiệp vụ theo từng module
+
+#### 3.1. Quản lý đơn vị hành chính (Cơ cấu tổ chức)
+
+**tblDonVi** là trái tim của hệ thống phân cấp.  
+- Cấu trúc **cây đa cấp** (hierarchical): DonViChaID tham chiếu chính nó → hỗ trợ đơn vị cấp dưới thuộc cấp trên (ví dụ: Bộ → Cục/Vụ → Chi cục → Phòng)  
+- **MaDV** (mã đơn vị): thường theo chuẩn TCVN hoặc quy định nội bộ (ví dụ: 01 cho Bộ, 0101 cho Vụ...)  
+- **CapDV** liên kết tblCapDV (cấp đơn vị: Trung ương, Tỉnh/TP, Huyện/Q, Xã/P, Đặc khu...)  
+- **TrangThai**: liên kết tblTrangThai (1 = Hoạt động, 0 = Ngừng hoạt động, ...)  
+
+**Nghiệp vụ chính:**  
+- Thêm/sửa/xóa đơn vị (chỉ admin hoặc cấp cao)  
+- Xây dựng cây tổ chức (TreeView hoặc recursive query)  
+- Lọc thiết bị theo đơn vị và tất cả đơn vị con  
+- Báo cáo thống kê thiết bị theo cấp đơn vị  
+
+#### 3.2. Quản lý cán bộ & người dùng hệ thống
+
+- **tblCanBo**: thông tin danh tính cán bộ (Họ tên, Email, Ngày sinh, CCCD – dùng để xác thực giao thiết bị)  
+- **tblUser**: tài khoản đăng nhập hệ thống (liên kết DonViID, CapDonViID)  
+
+**Nghiệp vụ:**  
+- Một cán bộ có thể có tài khoản user để đăng nhập quản lý (hoặc chỉ là đối tượng nhận thiết bị)  
+- Khi giao thiết bị → chọn CanBoID từ danh sách cán bộ thuộc đơn vị đó (hoặc mở rộng)  
+- Phân quyền dựa trên cấp đơn vị của user (ví dụ: user cấp Sở chỉ thấy thiết bị của Sở và huyện trực thuộc)  
+
+#### 3.3. Quản lý loại thiết bị & thông tin thiết bị
+
+- **tblLoaiThietBi**: danh mục loại (Máy tính, Máy in, Máy scan, Thiết bị hội nghị, Thiết bị chuyên ngành...)  
+  - **VongDoiNam** (mặc định 5 năm): thời gian vòng đời hữu ích → dùng tính **NgayHetHanVongDoi** = NgayCap + VongDoiNam năm  
+  - Phù hợp quy định khấu hao TSCĐ tin học thường 3–8 năm (theo Thông tư 45/2013/TT-BTC và cập nhật sau này)  
+
+- **tblThietBi** – thực thể chính:  
+  - SerialNumber: mã định danh duy nhất (unique index nên có)  
+  - CanBoID: người đang sử dụng (cá nhân hóa trách nhiệm)  
+  - DonViID: đơn vị quản lý hiện tại  
+  - NgayCap, NgayHetHan (bảo hành/hợp đồng), NgayHetHanVongDoi (hết khấu hao/vòng đời)  
+  - TrangThai: liên kết tblTrangThai (Đang sử dụng, Hỏng, Thanh lý, Mượn, Thu hồi...)  
+
+**Nghiệp vụ cốt lõi:**  
+- Đăng ký thiết bị mới (nhập kho)  
+- Gán thiết bị cho cán bộ / đơn vị  
+- Cảnh báo tự động: sắp hết bảo hành, sắp hết vòng đời (< 6 tháng)  
+- Kiểm kê định kỳ: đối chiếu thực tế vs hệ thống  
+
+#### 3.4. Quản lý lịch sử giao nhận & thay đổi (Audit trail)
+
+- **tblLichSuThietBi**: ghi lại mọi thay đổi quan trọng của thiết bị  
+  - Hành động: Giao mới, Thu hồi, Chuyển đơn vị, Giao cho cán bộ khác, Thanh lý... (từ tblHanhDong)  
+  - Lưu CanBoCu/Moi, DonViCu/Moi, Ghi chú, Thời điểm  
+
+**Nghiệp vụ:**  
+- Mọi thay đổi trạng thái/giao nhận → bắt buộc tạo record lịch sử  
+- Báo cáo lịch sử sử dụng của 1 thiết bị (ai dùng, khi nào, ở đơn vị nào)  
+- Truy xuất trách nhiệm khi mất mát/hỏng hóc  
+
+- **tblLichSuHeThong**: nhật ký thao tác hệ thống (ai sửa/xóa gì, nội dung cũ/mới) – hỗ trợ kiểm toán nội bộ  
+
+#### 3.5. Trạng thái & phân quyền
+
+- **tblTrangThai**: dùng chung cho nhiều bảng (đơn vị, thiết bị, user, quyền) → cần mô tả rõ ý nghĩa từng mã  
+- **tblQuyen**: quản lý vai trò (Admin, Quản lý cấp sở, Nhân viên kế toán tài sản, Người dùng thường...)  
+
+**Nghiệp vụ phân quyền đề xuất (dựa trên dữ liệu):**  
+- Admin toàn hệ thống  
+- Quản lý cấp đơn vị: chỉ thấy và quản lý thiết bị trong cây đơn vị của mình  
+- Cán bộ thường: chỉ xem thiết bị đang được giao cho mình  
+
+### 4. Các quy trình nghiệp vụ chính (Business Processes)
+
+1. **Nhập kho / Đăng ký thiết bị mới**  
+   → Chọn loại → Nhập serial, ngày cấp → Gán đơn vị quản lý ban đầu (thường là kho tổng)  
+
+2. **Giao thiết bị cho cán bộ**  
+   → Chọn thiết bị → Chọn cán bộ (thuộc đơn vị) → Ghi lịch sử (Hành động = Giao) → Cập nhật CanBoID, DonViID, NgayCap  
+
+3. **Thu hồi / Chuyển thiết bị**  
+   → Chọn thiết bị → Chọn hành động Thu hồi/Chuyển → Ghi lịch sử → Cập nhật CanBoID = NULL hoặc cán bộ mới  
+
+4. **Kiểm kê & báo cáo**  
+   - Theo đơn vị/cán bộ/loại thiết bị  
+   - Thiết bị sắp hết vòng đời  
+   - Thiết bị đang sử dụng quá thời gian quy định  
+
+5. **Thanh lý / Xử lý hết vòng đời**  
+   → Đánh dấu trạng thái Thanh lý → Ghi lịch sử  
+
+### 5. Đánh giá & đề xuất cải tiến
+
+**Điểm mạnh hiện tại:**  
+- Đã hỗ trợ tốt phân cấp hành chính Việt Nam (cây đơn vị đa cấp)  
+- Theo dõi lịch sử chi tiết → đáp ứng yêu cầu minh bạch tài sản công  
+- Cá nhân hóa trách nhiệm (gắn với cán bộ)  
+
+**Hạn chế & đề xuất mở rộng:**  
+- Thiếu bảng Kho (nhập kho, xuất kho, tồn kho)  
+- Chưa có bảng Hợp đồng mua sắm / Nhà cung cấp  
+- Chưa tích hợp mã QR / Barcode cho serial number  
+- Chưa có module Kế hoạch mua sắm theo định mức (Quyết định 15/2025/QĐ-TTg)  
+- Thiếu cảnh báo tự động (email/s通知) khi gần hết hạn  
+- Nên bổ sung bảng **tblKiemKe** (kết quả kiểm kê thực tế)  
+- Tích hợp chữ ký số / xác nhận điện tử khi giao nhận  
+
+**Kết luận**  
+Cơ sở dữ liệu hiện tại đã bao quát khá đầy đủ các nghiệp vụ cốt lõi của một hệ thống quản lý thiết bị chuyên dùng trong môi trường cơ quan nhà nước. Với một số bổ sung và tối ưu về phân quyền + cảnh báo, hệ thống hoàn toàn có thể đáp ứng tốt yêu cầu quản lý tài sản công theo quy định pháp luật hiện hành (2025–2026).  
+
+Nếu cần, có thể triển khai giai đoạn 1 tập trung vào **tblThietBi + tblLichSuThietBi + cây đơn vị**, sau đó mở rộng các module nâng cao.  
+
+Trân trọng,  
+Chuyên gia phân tích & lập trình

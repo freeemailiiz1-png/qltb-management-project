@@ -1,0 +1,37 @@
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.csproj.AssemblyReference.cache
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.Form1.resources
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.Properties.Resources.resources
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.csproj.GenerateResource.cache
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.AssemblyInfoInputs.cache
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.AssemblyInfo.cs
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.csproj.CoreCompileInputs.cache
+D:\workspace\QuanLyThietBi\bin\Debug\net472\QuanLyThietBi.exe.config
+D:\workspace\QuanLyThietBi\bin\Debug\net472\QuanLyThietBi.exe
+D:\workspace\QuanLyThietBi\bin\Debug\net472\QuanLyThietBi.pdb
+D:\workspace\QuanLyThietBi\bin\Debug\net472\EntityFramework.SqlServer.dll
+D:\workspace\QuanLyThietBi\bin\Debug\net472\EntityFramework.dll
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyTh.2AF1909B.Up2Date
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.exe
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.pdb
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.exe.config
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.QLUser.resources
+D:\workspace\QuanLyThietBi\obj\Debug\net472\QuanLyThietBi.PopupUserInfor.resources
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.csproj.AssemblyReference.cache
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.Form1.resources
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.PopupUserInfor.resources
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.Properties.Resources.resources
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.QLUser.resources
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.csproj.GenerateResource.cache
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.GeneratedMSBuildEditorConfig.editorconfig
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.AssemblyInfoInputs.cache
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.AssemblyInfo.cs
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.csproj.CoreCompileInputs.cache
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\bin\Debug\net472\QuanLyThietBi.exe.config
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\bin\Debug\net472\QuanLyThietBi.exe
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\bin\Debug\net472\QuanLyThietBi.pdb
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\bin\Debug\net472\EntityFramework.SqlServer.dll
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\bin\Debug\net472\EntityFramework.dll
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyTh.2AF1909B.Up2Date
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.exe
+D:\Đại học Mở\Học tập\Thực tập chuyên ngành\IT43_QLTB-main\IT43_QLTB-main\obj\Debug\net472\QuanLyThietBi.pdb

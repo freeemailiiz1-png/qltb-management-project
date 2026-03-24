@@ -1,0 +1,11 @@
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\bin\Debug\QuanLyThietBi.exe.config
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\bin\Debug\QuanLyThietBi.exe
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\bin\Debug\QuanLyThietBi.pdb
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.csproj.AssemblyReference.cache
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.Form1.resources
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.Properties.Resources.resources
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.csproj.GenerateResource.cache
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.csproj.CoreCompileInputs.cache
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.exe
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.pdb
+C:\Users\kien.nguyen4\Desktop\workspace\QuanLyThietBi\obj\Debug\QuanLyThietBi.exe.config
