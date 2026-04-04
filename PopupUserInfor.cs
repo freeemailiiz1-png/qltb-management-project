@@ -1,121 +1,124 @@
 ﻿using QuanLyThietBi.DAO;
 using QuanLyThietBi.DTO;
 using System;
-using System.Data;
 using System.Windows.Forms;
 
 namespace QuanLyThietBi
 {
     public partial class PopupUserInfor : Form
     {
-        private int currentUserID; // Biến để lưu ID, -1 là thêm mới
         private UserDAO userDAO = new UserDAO();
+        private DonViDAO donViDAO = new DonViDAO();
+        private CapDonViDAO capDonViDAO = new CapDonViDAO();
+        private TrangThaiDAO trangThaiDAO = new TrangThaiDAO();
+        private User currentUser;
+        private bool isEditMode = false;
 
-        // Constructor nhận UserID
-        public PopupUserInfor(int userID)
+        public PopupUserInfor()
         {
             InitializeComponent();
-            this.currentUserID = userID;
+            LoadComboBoxData();
         }
 
-        private void PopupUserInfor_Load(object sender, EventArgs e)
+        public PopupUserInfor(User user) : this()
         {
-            // Tải dữ liệu cho các ComboBox (nếu có)
-            // LoadDonViComboBox(); 
-            // LoadCapDonViComboBox();
+            currentUser = user;
+            isEditMode = true;
+            LoadUserInfo();
+        }
 
-            if (currentUserID != -1)
+        private void LoadComboBoxData()
+        {
+            // Load Đơn vị
+            var donVis = donViDAO.GetAll();
+            cboDonVi.DataSource = donVis;
+            cboDonVi.DisplayMember = "TenDV";
+            cboDonVi.ValueMember = "ID";
+            cboDonVi.SelectedIndex = -1;
+
+            // Load Cấp đơn vị
+            var capDonVis = capDonViDAO.GetAll();
+            cboCapDonVi.DataSource = capDonVis;
+            cboCapDonVi.DisplayMember = "TenCapDV";
+            cboCapDonVi.ValueMember = "ID";
+            cboCapDonVi.SelectedIndex = -1;
+
+            // Load Trạng thái
+            var trangThais = trangThaiDAO.GetAll();
+            cboTrangThai.DataSource = trangThais;
+            cboTrangThai.DisplayMember = "trangThai";
+            cboTrangThai.ValueMember = "IDTrangThai";
+            cboTrangThai.SelectedIndex = -1;
+        }
+
+        private void LoadUserInfo()
+        {
+            if (currentUser != null)
             {
-                // Chế độ chỉnh sửa: Tải thông tin người dùng
-                this.Text = "Cập nhật thông tin người dùng";
-                LoadUserData();
+                txtUsername.Text = currentUser.TenDangNhap;
+                // Để trống mật khẩu
+
+                if (currentUser.DonViID.HasValue)
+                    cboDonVi.SelectedValue = currentUser.DonViID.Value;
+
+                if (currentUser.CapDonViID.HasValue)
+                    cboCapDonVi.SelectedValue = currentUser.CapDonViID.Value;
+
+                if (currentUser.TrangThai.HasValue)
+                    cboTrangThai.SelectedValue = currentUser.TrangThai.Value;
             }
-            else
-            {
-                // Chế độ thêm mới
-                this.Text = "Thêm người dùng mới";
-            }
-        }
-
-        private void LoadUserData()
-        {
-            // Bạn cần một phương thức trong UserDAO để lấy thông tin một người dùng bằng ID
-            // Ví dụ: User user = userDAO.GetUserByID(this.currentUserID);
-            User user = userDAO.GetUserByID(this.currentUserID);
-            // Giả sử bạn đã có phương thức GetUserByID và nó trả về một đối tượng User
-
-            if (user != null)
-            {
-                txtUsername.Text = user.TenDangNhap;
-                // Không fill mật khẩu
-                cboDonVi.SelectedValue = user.DonViID;
-                cboCapDonVi.SelectedValue = user.CapDonViID;
-                // ... fill các control khác
-            }
-            
-            MessageBox.Show("Chức năng tải thông tin chi tiết người dùng chưa được triển khai.");
-        }
-
-        private void btnLuu_Click(object sender, EventArgs e) // Giả sử nút lưu của bạn tên là btnLuu
-        {
-            
-        }
-
-        private void btnDong_Click(object sender, EventArgs e) // Giả sử nút đóng của bạn tên là btnDong
-        {
-            this.Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // 1. Lấy dữ liệu từ các control trên form
-            User user = new User();
-            user.TenDangNhap = txtUsername.Text.Trim();
-            user.MatKhau = txtPassword.Text; // Để trống nếu không muốn đổi mật khẩu
-            // user.DonViID = (int)cboDonVi.SelectedValue;
-            // ...
-
-            // 2. Kiểm tra dữ liệu hợp lệ (validation)
-            if (string.IsNullOrEmpty(user.TenDangNhap))
+            if (string.IsNullOrWhiteSpace(txtUsername.Text))
             {
-                MessageBox.Show("Tên đăng nhập không được để trống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên đăng nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (currentUserID == -1 && string.IsNullOrEmpty(user.MatKhau))
+            if (!isEditMode && string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("Mật khẩu không được để trống khi thêm mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 3. Gọi DAO để lưu
-            bool success;
-            if (currentUserID == -1) // Thêm mới
+            var user = new User
             {
-                user.TrangThai = 1; // Mặc định là hoạt động
-                success = userDAO.AddUser(user);
-            }
-            else // Cập nhật
+                TenDangNhap = txtUsername.Text.Trim(),
+                MatKhau = txtPassword.Text, // Sẽ được hash trong DAO
+                DonViID = cboDonVi.SelectedValue != null ? (int?)cboDonVi.SelectedValue : null,
+                CapDonViID = cboCapDonVi.SelectedValue != null ? (int?)cboCapDonVi.SelectedValue : null,
+                TrangThai = cboTrangThai.SelectedValue != null ? (int?)cboTrangThai.SelectedValue : null
+            };
+
+            bool success = false;
+            if (isEditMode)
             {
-                user.ID = this.currentUserID;
+                user.ID = currentUser.ID;
                 success = userDAO.UpdateUser(user);
             }
+            else
+            {
+                success = userDAO.AddUser(user);
+            }
 
-            // 4. Thông báo kết quả và đóng form
             if (success)
             {
-                MessageBox.Show(currentUserID == -1 ? "Thêm mới thành công!" : "Cập nhật thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(isEditMode ? "Cập nhật thành công!" : "Thêm mới thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show(currentUserID == -1 ? "Thêm mới thất bại." : "Cập nhật thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Có lỗi xảy ra!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Close();
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

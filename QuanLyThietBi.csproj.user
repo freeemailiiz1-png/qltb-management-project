@@ -2,7 +2,34 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupCanBoInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupCapDoiThietBi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupCapDonViInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupDonViInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupHanhDongInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupLoaiThietBiInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupQuyenInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PopupThietBiInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="PopupUserInfor.cs">
@@ -40,6 +67,15 @@
     </Compile>
     <Compile Update="QLUser.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SearchableComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="TrangThaiEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UcCrudButtons.cs">
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

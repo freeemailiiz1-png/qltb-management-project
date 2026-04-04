@@ -108,6 +108,7 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(330, 153);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(194, 20);
             this.txtPassword.TabIndex = 7;
             // 

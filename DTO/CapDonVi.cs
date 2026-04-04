@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuanLyThietBi.DTO
 {
-    internal class CapDonVi
+    public class CapDonVi
     {
-        public int IDCapDonVi { get; set; }
-        public string TenCapDonVi { get; set; }
+        public int ID { get; set; }
+        public string TenCapDV { get; set; }
     }
 }

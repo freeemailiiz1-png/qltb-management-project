@@ -11,7 +11,7 @@ namespace QuanLyThietBi.Common
 {
     internal class ConnectionDB
     {
-        string strConnect = "Server=DESKTOP708;Database=QLTB;Integrated Security=True";
+        string strConnect = "Server=DESKTOP-NKFF26M\\MSSQLSERVER01;Database=QLTB;Integrated Security=True";
 
         public SqlConnection sqlCon;
         public SqlCommand sqlCom;

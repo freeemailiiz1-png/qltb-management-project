@@ -29,8 +29,8 @@ namespace QuanLyThietBi
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 QLUser mainForm = new QLUser();
-                mainForm.ShowDialog();
-                this.Close();
+                mainForm.FormClosed += (s, args) => this.Show(); // Hiện lại form đăng nhập khi form chính đóng
+                mainForm.Show();
             }
             else
             {

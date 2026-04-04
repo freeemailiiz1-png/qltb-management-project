@@ -1,26 +1,72 @@
 ﻿using QuanLyThietBi.DAO;
+using QuanLyThietBi.DAO;
+using QuanLyThietBi.DTO;
+using QuanLyThietBi.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace QuanLyThietBi
 {
-    public partial class QLUser : Form
+    public partial class QLUser : BaseForm
     {
-        // Khởi tạo DAO để có thể sử dụng trong toàn bộ form
         private UserDAO userDAO = new UserDAO();
+        private List<User> users = new List<User>();
 
         public QLUser()
         {
             InitializeComponent();
+            ucCrudButtons.AddClicked += ucCrudButtons_AddClicked;
+            ucCrudButtons.EditClicked += ucCrudButtons_EditClicked;
+            ucCrudButtons.DeleteClicked += ucCrudButtons_DeleteClicked;
+            ucCrudButtons.SearchClicked += ucCrudButtons_SearchClicked;
+            LoadUsers();
         }
 
-        // Phương thức để tải và hiển thị danh sách người dùng lên DataGridView
         private void LoadUsers()
         {
             try
             {
-                // Gọi phương thức từ DAO và gán kết quả cho DataGridView
-                dgUser.DataSource = userDAO.GetAllUsers();
+                users = userDAO.GetAll();
+                dgUser.DataSource = users;
+
+                // Tùy chỉnh hiển thị cột
+                if (dgUser.Columns["ID"] != null)
+                {
+                    dgUser.Columns["ID"].HeaderText = "Mã";
+                    dgUser.Columns["ID"].Width = 50;
+                }
+                if (dgUser.Columns["TenDangNhap"] != null)
+                {
+                    dgUser.Columns["TenDangNhap"].HeaderText = "Tên đăng nhập";
+                    dgUser.Columns["TenDangNhap"].Width = 150;
+                }
+                if (dgUser.Columns["TenDonVi"] != null)
+                {
+                    dgUser.Columns["TenDonVi"].HeaderText = "Đơn vị";
+                    dgUser.Columns["TenDonVi"].Width = 200;
+                }
+                if (dgUser.Columns["TenCapDonVi"] != null)
+                {
+                    dgUser.Columns["TenCapDonVi"].HeaderText = "Cấp đơn vị";
+                    dgUser.Columns["TenCapDonVi"].Width = 150;
+                }
+                if (dgUser.Columns["TenTrangThai"] != null)
+                {
+                    dgUser.Columns["TenTrangThai"].HeaderText = "Trạng thái";
+                    dgUser.Columns["TenTrangThai"].Width = 100;
+                }
+
+                // Ẩn các cột không cần thiết
+                if (dgUser.Columns["MatKhau"] != null)
+                    dgUser.Columns["MatKhau"].Visible = false;
+                if (dgUser.Columns["DonViID"] != null)
+                    dgUser.Columns["DonViID"].Visible = false;
+                if (dgUser.Columns["CapDonViID"] != null)
+                    dgUser.Columns["CapDonViID"].Visible = false;
+                if (dgUser.Columns["TrangThai"] != null)
+                    dgUser.Columns["TrangThai"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -28,33 +74,31 @@ namespace QuanLyThietBi
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void ucCrudButtons_AddClicked(object sender, EventArgs e)
         {
-            // Mở form popup ở chế độ thêm mới
-            PopupUserInfor popup = new PopupUserInfor(-1); // Truyền -1 cho chế độ thêm mới
-            popup.FormClosed += (s, args) => LoadUsers(); // Tải lại dữ liệu sau khi form popup đóng
+            PopupUserInfor popup = new PopupUserInfor();
+            popup.FormClosed += (s, args) => LoadUsers();
             popup.ShowDialog();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void ucCrudButtons_EditClicked(object sender, EventArgs e)
         {
-            // Kiểm tra xem đã chọn dòng nào chưa
-            if (dgUser.SelectedRows.Count == 0)
+            if (dgUser.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một người dùng để sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Lấy ID từ dòng được chọn
-            int selectedUserID = Convert.ToInt32(dgUser.SelectedRows[0].Cells["ID"].Value);
+            User selectedUser = dgUser.CurrentRow.DataBoundItem as User;
+            if (selectedUser == null)
+                return;
 
-            // Mở form popup ở chế độ chỉnh sửa
-            PopupUserInfor popup = new PopupUserInfor(selectedUserID);
-            popup.FormClosed += (s, args) => LoadUsers(); // Tải lại dữ liệu sau khi form popup đóng
+            PopupUserInfor popup = new PopupUserInfor(selectedUser);
+            popup.FormClosed += (s, args) => LoadUsers();
             popup.ShowDialog();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void ucCrudButtons_DeleteClicked(object sender, EventArgs e)
         {
             if (dgUser.SelectedRows.Count == 0)
             {
@@ -62,33 +106,44 @@ namespace QuanLyThietBi
                 return;
             }
 
-            int selectedUserID = Convert.ToInt32(dgUser.SelectedRows[0].Cells["ID"].Value);
+            int selectedID = Convert.ToInt32(dgUser.SelectedRows[0].Cells["ID"].Value);
 
-            // Hiển thị hộp thoại xác nhận
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa người dùng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
-                bool success = userDAO.DeleteUser(selectedUserID);
+                bool success = userDAO.DeleteUser(selectedID);
                 if (success)
                 {
-                    MessageBox.Show("Xóa người dùng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadUsers(); // Tải lại danh sách
+                    MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadUsers();
                 }
                 else
                 {
-                    MessageBox.Show("Xóa người dùng thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Xóa thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void ucCrudButtons_SearchClicked(object sender, EventArgs e)
         {
-            // Giả sử bạn có một TextBox tên là txtSearch
-            // string searchTerm = txtSearch.Text;
-            // DataTable searchResult = userDAO.SearchUsers(searchTerm); // Bạn cần tạo phương thức này trong UserDAO
-            // dgUser.DataSource = searchResult;
-            MessageBox.Show("Chức năng tìm kiếm chưa được triển khai.");
+            string keyword = StringHelper.RemoveDiacritics(txtSearch.Text.Trim().ToLower());
+            var result = users
+                .Where(u =>
+                    (!string.IsNullOrEmpty(u.TenDangNhap) && StringHelper.RemoveDiacritics(u.TenDangNhap.ToLower()).Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.TenDonVi) && StringHelper.RemoveDiacritics(u.TenDonVi.ToLower()).Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.TenCapDonVi) && StringHelper.RemoveDiacritics(u.TenCapDonVi.ToLower()).Contains(keyword)) ||
+                    (!string.IsNullOrEmpty(u.TenTrangThai) && StringHelper.RemoveDiacritics(u.TenTrangThai.ToLower()).Contains(keyword))
+                )
+                .ToList();
+
+            if (result.Count == 0)
+            {
+                MessageBox.Show("Không có kết quả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            dgUser.DataSource = null;
+            dgUser.DataSource = result;
         }
 
         private void QLUser_Load(object sender, EventArgs e)

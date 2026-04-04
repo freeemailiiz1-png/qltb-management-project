@@ -1,10 +1,12 @@
 ﻿using QuanLyThietBi.Common;
+using QuanLyThietBi.Common;
 using QuanLyThietBi.DTO;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
-using System.Data;
 
 namespace QuanLyThietBi.DAO
 {
@@ -251,9 +253,9 @@ namespace QuanLyThietBi.DAO
                             {
                                 ID = (int)reader["ID"],
                                 TenDangNhap = reader["TenDangNhap"].ToString(),
-                                DonViID = reader["DonViID"] != DBNull.Value ? Convert.ToInt32(reader["DonViID"]) : 0,
-                                CapDonViID = reader["CapDonViID"] != DBNull.Value ? Convert.ToInt32(reader["CapDonViID"]) : 0,
-                                TrangThai = reader["TrangThai"] != DBNull.Value ? Convert.ToInt32(reader["TrangThai"]) : 0
+                                DonViID = reader["DonViID"] != DBNull.Value ? (int?)reader["DonViID"] : null,
+                                CapDonViID = reader["CapDonViID"] != DBNull.Value ? (int?)reader["CapDonViID"] : null,
+                                TrangThai = reader["TrangThai"] != DBNull.Value ? (int?)reader["TrangThai"] : null
                             };
                         }
                     }
@@ -270,6 +272,61 @@ namespace QuanLyThietBi.DAO
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Lấy danh sách tất cả người dùng với thông tin JOIN.
+        /// </summary>
+        /// <returns>List<User> chứa danh sách người dùng.</returns>
+        public List<User> GetAll()
+        {
+            List<User> list = new List<User>();
+            string query = @"SELECT 
+                                u.ID, 
+                                u.TenDangNhap, 
+                                u.DonViID, 
+                                u.CapDonViID, 
+                                u.TrangThai,
+                                dv.TenDV AS TenDonVi,
+                                cdv.TenCapDV AS TenCapDonVi,
+                                tt.TrangThai AS TenTrangThai
+                           FROM tblUser u 
+                           LEFT JOIN tblDonVi dv ON u.DonViID = dv.ID
+                           LEFT JOIN tblCapDV cdv ON u.CapDonViID = cdv.ID
+                           LEFT JOIN tblTrangThai tt ON u.TrangThai = tt.ID";
+            try
+            {
+                conn.KetNoi();
+                using (var cmd = new SqlCommand(query, conn.sqlCon))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new User
+                            {
+                                ID = (int)reader["ID"],
+                                TenDangNhap = reader["TenDangNhap"] != DBNull.Value ? reader["TenDangNhap"].ToString() : "",
+                                DonViID = reader["DonViID"] != DBNull.Value ? (int?)reader["DonViID"] : null,
+                                CapDonViID = reader["CapDonViID"] != DBNull.Value ? (int?)reader["CapDonViID"] : null,
+                                TrangThai = reader["TrangThai"] != DBNull.Value ? (int?)reader["TrangThai"] : null,
+                                TenDonVi = reader["TenDonVi"] != DBNull.Value ? reader["TenDonVi"].ToString() : "",
+                                TenCapDonVi = reader["TenCapDonVi"] != DBNull.Value ? reader["TenCapDonVi"].ToString() : "",
+                                TenTrangThai = reader["TenTrangThai"] != DBNull.Value ? reader["TenTrangThai"].ToString() : ""
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi lấy danh sách người dùng: " + ex.Message);
+            }
+            finally
+            {
+                conn.NgatKetNoi();
+            }
+            return list;
         }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuanLyThietBi.DTO
 {
-    internal class TrangThai
+    public class TrangThai
     {
         public int IDTrangThai { get; set; }
-        public string TenTrangThai { get; set; }
+        public string trangThai { get; set; }
         public string MoTa { get; set; }
     }
 }

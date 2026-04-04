@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace QuanLyThietBi.DTO
 {
-    internal class HanhDong
+    public class HanhDong
     {
-        public int IDHanhDong { get; set; }
-        public string TenHanhDong { get; set; }
+        public int ID { get; set; }
+        public string name { get; set; }
+
+        // Thuộc tính bổ sung (alias) để tương thích
+        public string TenHanhDong
+        {
+            get { return name; }
+            set { name = value; }
+        }
     }
 }

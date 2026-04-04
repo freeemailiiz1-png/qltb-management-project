@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyThietBi.DTO
 {
-    internal class DonVi
+    public class DonVi
     {
-        public int IDDonVi { get; set; }
-        public string TenDonVi { get; set; }
-        public string MaDonVi { get; set; }
-        public int IDCapDonVi { get; set; }
-        public int IDDonViCha { get; set; }
-        public int TrangThai { get; set; }
-        public DateTime NgayTao { get; set; }
+        public int ID { get; set; }
+        public string MaDV { get; set; }
+        public string TenDV { get; set; }
+        public int? CapDV { get; set; }
+        public int? DonViChaID { get; set; }
+        public int? TrangThai { get; set; }
+        public DateTime? NgayTao { get; set; }
+        
+        // Thuộc tính bổ sung cho hiển thị
+        public string TenCapDV { get; set; }
+        public string TenDonViCha { get; set; }
+        public string TenTrangThai { get; set; }
     }
 }

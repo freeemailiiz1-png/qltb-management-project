@@ -128,23 +128,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kien.nguyen4\\.nuget\\packages\\": {},
+    "C:\\Users\\Gia Phat\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\workspace\\QuanLyThietBi\\QuanLyThietBi.csproj",
+      "projectUniqueName": "D:\\qltb-management-project\\QuanLyThietBi.csproj",
       "projectName": "QuanLyThietBi",
-      "projectPath": "D:\\workspace\\QuanLyThietBi\\QuanLyThietBi.csproj",
-      "packagesPath": "C:\\Users\\kien.nguyen4\\.nuget\\packages\\",
-      "outputPath": "D:\\workspace\\QuanLyThietBi\\obj\\",
+      "projectPath": "D:\\qltb-management-project\\QuanLyThietBi.csproj",
+      "packagesPath": "C:\\Users\\Gia Phat\\.nuget\\packages\\",
+      "outputPath": "D:\\qltb-management-project\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\kien.nguyen4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Gia Phat\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -153,6 +153,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -182,7 +183,7 @@
             "version": "[6.5.1, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

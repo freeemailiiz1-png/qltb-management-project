@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XIxsAiwMbJ4=",
+  "dgSpecHash": "6GO2uAMmXAk=",
   "success": true,
-  "projectFilePath": "D:\\workspace\\QuanLyThietBi\\QuanLyThietBi.csproj",
+  "projectFilePath": "D:\\qltb-management-project\\QuanLyThietBi.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kien.nguyen4\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512"
+    "C:\\Users\\Gia Phat\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512"
   ],
   "logs": []
 }

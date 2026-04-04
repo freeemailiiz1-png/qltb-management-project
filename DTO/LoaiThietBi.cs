@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyThietBi.DTO
 {
-    internal class LoaiThietBi
+    public class LoaiThietBi
     {
-        public int IDLoaiThietBi { get; set; }
-        public string TenLoaiThietBi { get; set; }
+        public int ID { get; set; }
+        public string TenLoai { get; set; }
         public string MoTa { get; set; }
-        public int VongDoi { get; set; }
+        public int? VongDoiNam { get; set; }
     }
 }
