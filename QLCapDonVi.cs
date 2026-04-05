@@ -18,6 +18,7 @@ namespace QuanLyThietBi
         private UcCrudButtons ucCrudButtons;
         private CapDonViDAO capDonViDAO = new CapDonViDAO();
         private List<CapDonVi> capDonVis = new List<CapDonVi>();
+
         public QLCapDonVi()
         {
             InitializeComponent();
@@ -68,13 +69,7 @@ namespace QuanLyThietBi
 
         private void ucCrudButtons1_DeleteClicked(object sender, EventArgs e)
         {
-            // TODO: Implement delete logic for TrangThai
-            /*if (dgvCapDonVi.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Vui lòng chọn một cấp đơn vị để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }*/
-
+        
             int selectedID = Convert.ToInt32(dgvCapDonVi.SelectedRows[0].Cells["ID"].Value);
 
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa cấp đơn vị này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
