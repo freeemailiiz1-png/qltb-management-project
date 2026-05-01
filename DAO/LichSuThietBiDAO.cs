@@ -19,7 +19,7 @@ namespace QuanLyThietBi.DAO
             string query = @"SELECT 
                                 ls.ID, 
                                 ls.ThietBiID, 
-                                ls.HanhDongID, 
+                                ls.ID HanhDongID, 
                                 ls.CanBoCuID, 
                                 ls.CanBoMoiID, 
                                 ls.DonViCuID, 
@@ -27,14 +27,14 @@ namespace QuanLyThietBi.DAO
                                 ls.ThoiDiem, 
                                 ls.GhiChu,
                                 tb.SerialNumber,
-                                hd.TenHanhDong,
+                                hd.Name TenHanhDong,
                                 cbcu.HoTen AS TenCanBoCu,
                                 cbmoi.HoTen AS TenCanBoMoi,
                                 dvcu.TenDV AS TenDonViCu,
                                 dvmoi.TenDV AS TenDonViMoi
                            FROM tblLichSuThietBi ls
                            LEFT JOIN tblThietBi tb ON ls.ThietBiID = tb.ID
-                           LEFT JOIN tblHanhDong hd ON ls.HanhDongID = hd.ID
+                           LEFT JOIN tblHanhDong hd ON ls.ID = hd.ID
                            LEFT JOIN tblCanBo cbcu ON ls.CanBoCuID = cbcu.ID
                            LEFT JOIN tblCanBo cbmoi ON ls.CanBoMoiID = cbmoi.ID
                            LEFT JOIN tblDonVi dvcu ON ls.DonViCuID = dvcu.ID
@@ -120,7 +120,7 @@ namespace QuanLyThietBi.DAO
             string query = @"SELECT 
                                 ls.ID, 
                                 ls.ThietBiID, 
-                                ls.HanhDongID, 
+                                ls.HanhDong, 
                                 ls.CanBoCuID, 
                                 ls.CanBoMoiID, 
                                 ls.DonViCuID, 
@@ -135,7 +135,7 @@ namespace QuanLyThietBi.DAO
                                 dvmoi.TenDV AS TenDonViMoi
                            FROM tblLichSuThietBi ls
                            LEFT JOIN tblThietBi tb ON ls.ThietBiID = tb.ID
-                           LEFT JOIN tblHanhDong hd ON ls.HanhDongID = hd.ID
+                           LEFT JOIN tblHanhDong hd ON ls.HanhDong = hd.ID
                            LEFT JOIN tblCanBo cbcu ON ls.CanBoCuID = cbcu.ID
                            LEFT JOIN tblCanBo cbmoi ON ls.CanBoMoiID = cbmoi.ID
                            LEFT JOIN tblDonVi dvcu ON ls.DonViCuID = dvcu.ID
@@ -156,7 +156,7 @@ namespace QuanLyThietBi.DAO
                             {
                                 ID = (int)reader["ID"],
                                 ThietBiID = reader["ThietBiID"] != DBNull.Value ? (int?)reader["ThietBiID"] : null,
-                                HanhDongID = reader["HanhDongID"] != DBNull.Value ? (int?)reader["HanhDongID"] : null,
+                                HanhDongID = reader["HanhDong"] != DBNull.Value ? (int?)reader["HanhDong"] : null,
                                 CanBoCuID = reader["CanBoCuID"] != DBNull.Value ? (int?)reader["CanBoCuID"] : null,
                                 CanBoMoiID = reader["CanBoMoiID"] != DBNull.Value ? (int?)reader["CanBoMoiID"] : null,
                                 DonViCuID = reader["DonViCuID"] != DBNull.Value ? (int?)reader["DonViCuID"] : null,

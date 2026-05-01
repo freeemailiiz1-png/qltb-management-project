@@ -1,4 +1,4 @@
-namespace QuanLyThietBi
+﻿namespace QuanLyThietBi
 {
     partial class QLLichSuThietBi
     {
@@ -73,9 +73,9 @@ namespace QuanLyThietBi
             this.lblSearch.AutoSize = true;
             this.lblSearch.Location = new System.Drawing.Point(15, 22);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(52, 13);
+            this.lblSearch.Size = new System.Drawing.Size(49, 13);
             this.lblSearch.TabIndex = 2;
-            this.lblSearch.Text = "T�m ki?m:";
+            this.lblSearch.Text = "Tìm kiếm";
             // 
             // cboThietBi
             // 
@@ -91,56 +91,56 @@ namespace QuanLyThietBi
             this.lblThietBi.AutoSize = true;
             this.lblThietBi.Location = new System.Drawing.Point(15, 53);
             this.lblThietBi.Name = "lblThietBi";
-            this.lblThietBi.Size = new System.Drawing.Size(47, 13);
+            this.lblThietBi.Size = new System.Drawing.Size(42, 13);
             this.lblThietBi.TabIndex = 4;
-            this.lblThietBi.Text = "Thi?t b?:";
+            this.lblThietBi.Text = "Thiết bị";
             // 
             // chkLoc
             // 
             this.chkLoc.AutoSize = true;
             this.chkLoc.Location = new System.Drawing.Point(18, 83);
             this.chkLoc.Name = "chkLoc";
-            this.chkLoc.Size = new System.Drawing.Size(87, 17);
+            this.chkLoc.Size = new System.Drawing.Size(94, 17);
             this.chkLoc.TabIndex = 5;
-            this.chkLoc.Text = "L?c theo ng�y";
+            this.chkLoc.Text = "Lọc theo ngày";
             this.chkLoc.UseVisualStyleBackColor = true;
             this.chkLoc.CheckedChanged += new System.EventHandler(this.chkLoc_CheckedChanged);
             // 
             // dtpTuNgay
             // 
+            this.dtpTuNgay.Enabled = false;
             this.dtpTuNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpTuNgay.Location = new System.Drawing.Point(155, 81);
             this.dtpTuNgay.Name = "dtpTuNgay";
             this.dtpTuNgay.Size = new System.Drawing.Size(100, 20);
             this.dtpTuNgay.TabIndex = 6;
-            this.dtpTuNgay.Enabled = false;
             // 
             // dtpDenNgay
             // 
+            this.dtpDenNgay.Enabled = false;
             this.dtpDenNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpDenNgay.Location = new System.Drawing.Point(315, 81);
             this.dtpDenNgay.Name = "dtpDenNgay";
             this.dtpDenNgay.Size = new System.Drawing.Size(100, 20);
             this.dtpDenNgay.TabIndex = 7;
-            this.dtpDenNgay.Enabled = false;
             // 
             // lblTuNgay
             // 
             this.lblTuNgay.AutoSize = true;
             this.lblTuNgay.Location = new System.Drawing.Point(111, 84);
             this.lblTuNgay.Name = "lblTuNgay";
-            this.lblTuNgay.Size = new System.Drawing.Size(38, 13);
+            this.lblTuNgay.Size = new System.Drawing.Size(46, 13);
             this.lblTuNgay.TabIndex = 8;
-            this.lblTuNgay.Text = "T? ng�y:";
+            this.lblTuNgay.Text = "Từ ngày";
             // 
             // lblDenNgay
             // 
             this.lblDenNgay.AutoSize = true;
             this.lblDenNgay.Location = new System.Drawing.Point(261, 84);
             this.lblDenNgay.Name = "lblDenNgay";
-            this.lblDenNgay.Size = new System.Drawing.Size(48, 13);
+            this.lblDenNgay.Size = new System.Drawing.Size(53, 13);
             this.lblDenNgay.TabIndex = 9;
-            this.lblDenNgay.Text = "??n ng�y:";
+            this.lblDenNgay.Text = "Đến ngày";
             // 
             // btnSearch
             // 
@@ -148,7 +148,7 @@ namespace QuanLyThietBi
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(90, 30);
             this.btnSearch.TabIndex = 10;
-            this.btnSearch.Text = "T�m ki?m";
+            this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -158,7 +158,7 @@ namespace QuanLyThietBi
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(90, 30);
             this.btnRefresh.TabIndex = 11;
-            this.btnRefresh.Text = "L�m m?i";
+            this.btnRefresh.Text = "Làm mới";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -201,7 +201,7 @@ namespace QuanLyThietBi
             this.Controls.Add(this.lblTongSo);
             this.Controls.Add(this.dgvLichSu);
             this.Name = "QLLichSuThietBi";
-            this.Text = "Qu?n l� l?ch s? thi?t b?";
+            this.Text = "Qu?n lý l?ch s? thi?t b?";
             this.Load += new System.EventHandler(this.QLLichSuThietBi_Load);
             this.Controls.SetChildIndex(this.dgvLichSu, 0);
             this.Controls.SetChildIndex(this.lblTongSo, 0);

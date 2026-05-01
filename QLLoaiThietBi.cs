@@ -129,7 +129,7 @@ namespace QuanLyThietBi
                 MessageBox.Show("Không có kết quả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            dgvLoaiThietBi.DataSource = null;
+            //dgvLoaiThietBi.DataSource = null;
             dgvLoaiThietBi.DataSource = result;
         }
 

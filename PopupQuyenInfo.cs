@@ -1,4 +1,5 @@
-﻿using QuanLyThietBi.DAO;
+﻿using QuanLyThietBi.Common;
+using QuanLyThietBi.DAO;
 using QuanLyThietBi.DTO;
 using System;
 using System.Drawing;
@@ -145,7 +146,10 @@ namespace QuanLyThietBi
             var quyen = new Quyen
             {
                 TenQuyen = txtTenQuyen.Text.Trim(),
-                TrangThai = cboTrangThai.SelectedValue != null ? (int?)cboTrangThai.SelectedValue : null
+                TrangThai = cboTrangThai.SelectedValue != null ? (int?)cboTrangThai.SelectedValue : null,
+
+                // ✅ QUAN TRỌNG: Truyền UserID từ SessionManager
+                UserID = SessionManager.GetCurrentUserID()
             };
 
             bool success = false;

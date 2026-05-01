@@ -86,8 +86,8 @@ namespace QuanLyThietBi
                 // Ẩn các cột ID
                 if (dgvLichSu.Columns["ThietBiID"] != null)
                     dgvLichSu.Columns["ThietBiID"].Visible = false;
-                if (dgvLichSu.Columns["HanhDongID"] != null)
-                    dgvLichSu.Columns["HanhDongID"].Visible = false;
+                if (dgvLichSu.Columns["HanhDong"] != null)
+                    dgvLichSu.Columns["HanhDong"].Visible = false;
                 if (dgvLichSu.Columns["CanBoCuID"] != null)
                     dgvLichSu.Columns["CanBoCuID"].Visible = false;
                 if (dgvLichSu.Columns["CanBoMoiID"] != null)
