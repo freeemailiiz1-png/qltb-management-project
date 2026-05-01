@@ -24,5 +24,8 @@ namespace QuanLyThietBi.DTO
         public string TenCanBo { get; set; }
         public string TenDonVi { get; set; }
         public string TenTrangThai { get; set; }
+
+        // Thuộc tính để ghi log (không lưu vào DB)
+        public int? UserID { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using QuanLyThietBi.DAO;
+﻿using QuanLyThietBi.Common;
+using QuanLyThietBi.DAO;
 using QuanLyThietBi.DAO;
 using QuanLyThietBi.DTO;
 using System;
@@ -381,7 +382,10 @@ namespace QuanLyThietBi
                 NgayCap = dtpNgayCap.Value,
                 NgayHetHan = dtpNgayHetHan.Checked ? (DateTime?)dtpNgayHetHan.Value : null,
                 NgayHetHanVongDoi = dtpNgayHetHanVongDoi.Checked ? (DateTime?)dtpNgayHetHanVongDoi.Value : null,
-                GhiChu = txtGhiChu.Text.Trim()
+                GhiChu = txtGhiChu.Text.Trim(),
+
+                // ✅ QUAN TRỌNG: Truyền UserID từ SessionManager
+                UserID = SessionManager.GetCurrentUserID()
             };
 
             bool success = false;

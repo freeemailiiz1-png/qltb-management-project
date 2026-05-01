@@ -16,5 +16,8 @@ namespace QuanLyThietBi.DTO
         public string TenCapDV { get; set; }
         public string TenDonViCha { get; set; }
         public string TenTrangThai { get; set; }
+
+        // Thuộc tính để ghi log
+        public int? UserID { get; set; }
     }
 }

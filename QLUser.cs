@@ -100,13 +100,13 @@ namespace QuanLyThietBi
 
         private void ucCrudButtons_DeleteClicked(object sender, EventArgs e)
         {
-            if (dgUser.SelectedRows.Count == 0)
+            if (dgUser.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một người dùng để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int selectedID = Convert.ToInt32(dgUser.SelectedRows[0].Cells["ID"].Value);
+            int selectedID = Convert.ToInt32(dgUser.CurrentRow.Cells["ID"].Value);
 
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa người dùng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -142,7 +142,7 @@ namespace QuanLyThietBi
                 MessageBox.Show("Không có kết quả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            dgUser.DataSource = null;
+            //dgUser.DataSource = null;
             dgUser.DataSource = result;
         }
 

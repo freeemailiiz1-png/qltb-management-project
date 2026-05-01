@@ -47,3 +47,6 @@ D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.sourcelink.json
 D:\qltb-management-project\obj\Debug\net472\QuanLyTh.2AF1909B.Up2Date
 D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.exe
 D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.pdb
+D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.PopupCapDoiThietBi.resources
+D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.QLLichSuThietBi.resources
+D:\qltb-management-project\obj\Debug\net472\QuanLyThietBi.QLLichSuHeThong.resources

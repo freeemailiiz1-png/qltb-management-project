@@ -14,5 +14,8 @@ namespace QuanLyThietBi.DTO
 
         // Thuộc tính bổ sung cho hiển thị
         public string TenTrangThai { get; set; }
+
+        // Thuộc tính để ghi log
+        public int? UserID { get; set; }
     }
 }
