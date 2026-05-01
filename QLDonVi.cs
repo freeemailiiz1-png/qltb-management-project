@@ -26,6 +26,7 @@ namespace QuanLyThietBi
 
         private void LoadDonVi()
         {
+
             try
             {
                 donVis = donViDAO.GetAll();
@@ -89,6 +90,7 @@ namespace QuanLyThietBi
             popup.FormClosed += (s, args) => LoadDonVi();
             popup.ShowDialog();
         }
+
 
         private void ucCrudButtons1_EditClicked(object sender, EventArgs e)
         {
