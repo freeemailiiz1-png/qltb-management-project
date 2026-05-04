@@ -161,8 +161,8 @@ namespace QuanLyThietBi
                 // Lưu lịch sử trước khi xóa
                 SaveDeleteHistory(selectedThietBi);
 
-                // Thực hiện xóa thiết bị
-                bool success = thietBiDAO.Delete(selectedID);
+                // Thực hiện xóa thiết bị - QUAN TRỌNG: Truyền UserID từ SessionManager
+                bool success = thietBiDAO.Delete(selectedID, SessionManager.GetCurrentUserID());
                 if (success)
                 {
                     MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -232,7 +232,7 @@ namespace QuanLyThietBi
                 MessageBox.Show("Không có kết quả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            dgvThietBi.DataSource = null;
+            //dgvThietBi.DataSource = null;
             dgvThietBi.DataSource = result;
         }
 

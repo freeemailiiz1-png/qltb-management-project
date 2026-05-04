@@ -13,6 +13,28 @@ namespace QuanLyThietBi.DAO
     internal class UserDAO
     {
         private ConnectionDB conn = new ConnectionDB();
+        private LichSuHeThongDAO lichSuHeThongDAO = new LichSuHeThongDAO();
+        private HanhDongDAO hanhDongDAO = new HanhDongDAO();
+
+        /// <summary>
+        /// Lấy ID của hành động dựa trên tên hành động
+        /// </summary>
+        private int? GetHanhDongID(string tenHanhDong)
+        {
+            try
+            {
+                var hanhDongs = hanhDongDAO.GetAll();
+                var hanhDong = hanhDongs.Find(hd => 
+                    hd.name != null && 
+                    hd.name.Equals(tenHanhDong, StringComparison.OrdinalIgnoreCase)
+                );
+                return hanhDong?.ID;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         // --- Phương thức mã hóa mật khẩu ---
         private string HashPassword(string password)
@@ -91,21 +113,40 @@ namespace QuanLyThietBi.DAO
         public bool AddUser(User user)
         {
             string hashedPassword = HashPassword(user.MatKhau);
-            string query = "INSERT INTO tblUser (TenDangNhap, MatKhau, DonViID, CapDonViID, TrangThai) VALUES (@TenDangNhap, @MatKhau, @DonViID, @CapDonViID, @TrangThai)";
+            string query = "INSERT INTO tblUser (TenDangNhap, MatKhau, DonViID, CapDonViID, TrangThai) VALUES (@TenDangNhap, @MatKhau, @DonViID, @CapDonViID, @TrangThai); SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             try
             {
                 conn.KetNoi();
+                int newID = 0;
                 using (SqlCommand cmd = new SqlCommand(query, conn.sqlCon))
                 {
                     cmd.Parameters.AddWithValue("@TenDangNhap", user.TenDangNhap);
                     cmd.Parameters.AddWithValue("@MatKhau", hashedPassword);
-                    cmd.Parameters.AddWithValue("@DonViID", user.DonViID);
-                    cmd.Parameters.AddWithValue("@CapDonViID", user.CapDonViID);
-                    cmd.Parameters.AddWithValue("@TrangThai", user.TrangThai);
+                    cmd.Parameters.AddWithValue("@DonViID", (object)user.DonViID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CapDonViID", (object)user.CapDonViID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TrangThai", (object)user.TrangThai ?? DBNull.Value);
 
-                    cmd.ExecuteNonQuery();
-                    return true;
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        newID = Convert.ToInt32(result);
+
+                        // Ghi lịch sử hệ thống
+                        lichSuHeThongDAO.Insert(new LichSuHeThong
+                        {
+                            UserID = user.ActionByUserID,
+                            HanhDongID = GetHanhDongID("Thêm"),
+                            BangTacDong = "tblUser",
+                            BanGhiID = newID,
+                            ThoiDiem = DateTime.Now,
+                            NoiDungCu = null,
+                            NoiDungMoi = $"TenDangNhap: {user.TenDangNhap}, DonViID: {user.DonViID}, CapDonViID: {user.CapDonViID}"
+                        });
+
+                        return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -126,6 +167,9 @@ namespace QuanLyThietBi.DAO
         /// <returns>True nếu cập nhật thành công, False nếu thất bại.</returns>
         public bool UpdateUser(User user)
         {
+            // Lấy thông tin user cũ trước khi cập nhật
+            User userCu = GetUserByID(user.ID);
+
             // Nếu mật khẩu không rỗng, cập nhật cả mật khẩu đã mã hóa
             bool updatePassword = !string.IsNullOrEmpty(user.MatKhau);
             string query;
@@ -145,9 +189,9 @@ namespace QuanLyThietBi.DAO
                 using (SqlCommand cmd = new SqlCommand(query, conn.sqlCon))
                 {
                     cmd.Parameters.AddWithValue("@TenDangNhap", user.TenDangNhap);
-                    cmd.Parameters.AddWithValue("@DonViID", user.DonViID);
-                    cmd.Parameters.AddWithValue("@CapDonViID", user.CapDonViID);
-                    cmd.Parameters.AddWithValue("@TrangThai", user.TrangThai);
+                    cmd.Parameters.AddWithValue("@DonViID", (object)user.DonViID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CapDonViID", (object)user.CapDonViID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TrangThai", (object)user.TrangThai ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@ID", user.ID);
 
                     if (updatePassword)
@@ -156,8 +200,24 @@ namespace QuanLyThietBi.DAO
                         cmd.Parameters.AddWithValue("@MatKhau", hashedPassword);
                     }
 
-                    cmd.ExecuteNonQuery();
-                    return true;
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0 && userCu != null)
+                    {
+                        // Ghi lịch sử hệ thống
+                        lichSuHeThongDAO.Insert(new LichSuHeThong
+                        {
+                            UserID = user.ActionByUserID,
+                            HanhDongID = GetHanhDongID("Sửa"),
+                            BangTacDong = "tblUser",
+                            BanGhiID = user.ID,
+                            ThoiDiem = DateTime.Now,
+                            NoiDungCu = $"TenDangNhap: {userCu.TenDangNhap}, DonViID: {userCu.DonViID}, CapDonViID: {userCu.CapDonViID}",
+                            NoiDungMoi = $"TenDangNhap: {user.TenDangNhap}, DonViID: {user.DonViID}, CapDonViID: {user.CapDonViID}"
+                        });
+                    }
+
+                    return result > 0;
                 }
             }
             catch (Exception ex)
@@ -172,21 +232,40 @@ namespace QuanLyThietBi.DAO
         }
 
         /// <summary>
-        /// Xóa một người dùng khỏi cơ sở dữ liệu.
+        /// Xóa mềm một người dùng bằng cách cập nhật trạng thái về "Xóa" (ID = 2).
         /// </summary>
         /// <param name="userID">ID của người dùng cần xóa.</param>
         /// <returns>True nếu xóa thành công, False nếu thất bại.</returns>
-        public bool DeleteUser(int userID)
+        public bool DeleteUser(int userID, int? actionByUserID = null)
         {
-            string query = "DELETE FROM tblUser WHERE ID = @ID";
+            // Lấy thông tin user trước khi xóa
+            User userCu = GetUserByID(userID);
+
+            string query = "UPDATE tblUser SET TrangThai = (SELECT ID FROM tblTrangThai WHERE TrangThai = N'Xóa') WHERE ID = @ID";
             try
             {
                 conn.KetNoi();
                 using (SqlCommand cmd = new SqlCommand(query, conn.sqlCon))
                 {
                     cmd.Parameters.AddWithValue("@ID", userID);
-                    cmd.ExecuteNonQuery();
-                    return true;
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0 && userCu != null)
+                    {
+                        // Ghi lịch sử hệ thống
+                        lichSuHeThongDAO.Insert(new LichSuHeThong
+                        {
+                            UserID = actionByUserID,
+                            HanhDongID = GetHanhDongID("Xóa"),
+                            BangTacDong = "tblUser",
+                            BanGhiID = userID,
+                            ThoiDiem = DateTime.Now,
+                            NoiDungCu = $"TenDangNhap: {userCu.TenDangNhap}, DonViID: {userCu.DonViID}, CapDonViID: {userCu.CapDonViID}",
+                            NoiDungMoi = "Đã xóa"
+                        });
+                    }
+
+                    return result > 0;
                 }
             }
             catch (Exception ex)
@@ -207,7 +286,7 @@ namespace QuanLyThietBi.DAO
         public DataTable GetAllUsers()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT ID, TenDangNhap, DonViID, CapDonViID, TrangThai FROM tblUser"; 
+            string query = "SELECT ID, TenDangNhap, DonViID, CapDonViID, TrangThai FROM tblUser WHERE TrangThai = (SELECT ID FROM tblTrangThai WHERE TrangThai = N'Hoạt động')";
             try
             {
                 conn.KetNoi();
@@ -236,7 +315,7 @@ namespace QuanLyThietBi.DAO
         {
             User user = null;
             // Không lấy mật khẩu để bảo mật
-            string query = "SELECT ID, TenDangNhap, DonViID, CapDonViID, TrangThai FROM tblUser WHERE ID = @ID";
+            string query = "SELECT ID, TenDangNhap, DonViID, CapDonViID, TrangThai FROM tblUser WHERE ID = @ID AND TrangThai = (SELECT ID FROM tblTrangThai WHERE TrangThai = N'Hoạt động')";
 
             try
             {
@@ -293,7 +372,9 @@ namespace QuanLyThietBi.DAO
                            FROM tblUser u 
                            LEFT JOIN tblDonVi dv ON u.DonViID = dv.ID
                            LEFT JOIN tblCapDV cdv ON u.CapDonViID = cdv.ID
-                           LEFT JOIN tblTrangThai tt ON u.TrangThai = tt.ID";
+                           LEFT JOIN tblTrangThai tt ON u.TrangThai = tt.ID
+                           WHERE u.TrangThai = (SELECT ID FROM tblTrangThai WHERE TrangThai = N'Hoạt động')
+                                AND u.TenDangNhap != 'admin'";
             try
             {
                 conn.KetNoi();

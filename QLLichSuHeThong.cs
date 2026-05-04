@@ -46,10 +46,10 @@ namespace QuanLyThietBi
                     dgvLichSu.Columns["TenUser"].HeaderText = "Người thực hiện";
                     dgvLichSu.Columns["TenUser"].Width = 120;
                 }
-                if (dgvLichSu.Columns["HanhDong"] != null)
+                if (dgvLichSu.Columns["TenHanhDong"] != null)
                 {
-                    dgvLichSu.Columns["HanhDong"].HeaderText = "Hành động";
-                    dgvLichSu.Columns["HanhDong"].Width = 100;
+                    dgvLichSu.Columns["TenHanhDong"].HeaderText = "Hành động";
+                    dgvLichSu.Columns["TenHanhDong"].Width = 100;
                 }
                 if (dgvLichSu.Columns["BangTacDong"] != null)
                 {
@@ -81,6 +81,8 @@ namespace QuanLyThietBi
                 // Ẩn cột UserID
                 if (dgvLichSu.Columns["UserID"] != null)
                     dgvLichSu.Columns["UserID"].Visible = false;
+                if (dgvLichSu.Columns["HanhDong"] != null)
+                    dgvLichSu.Columns["HanhDong"].Visible = false;
 
                 lblTongSo.Text = $"Tổng số: {lichSuList.Count} bản ghi";
             }
@@ -119,7 +121,7 @@ namespace QuanLyThietBi
                 {
                     filtered = filtered.Where(ls =>
                         (!string.IsNullOrEmpty(ls.TenUser) && StringHelper.RemoveDiacritics(ls.TenUser.ToLower()).Contains(keyword)) ||
-                        (!string.IsNullOrEmpty(ls.HanhDong) && StringHelper.RemoveDiacritics(ls.HanhDong.ToLower()).Contains(keyword)) ||
+                        (!string.IsNullOrEmpty(ls.TenHanhDong) && StringHelper.RemoveDiacritics(ls.TenHanhDong.ToLower()).Contains(keyword)) ||
                         (!string.IsNullOrEmpty(ls.BangTacDong) && StringHelper.RemoveDiacritics(ls.BangTacDong.ToLower()).Contains(keyword)) ||
                         (!string.IsNullOrEmpty(ls.NoiDungCu) && StringHelper.RemoveDiacritics(ls.NoiDungCu.ToLower()).Contains(keyword)) ||
                         (!string.IsNullOrEmpty(ls.NoiDungMoi) && StringHelper.RemoveDiacritics(ls.NoiDungMoi.ToLower()).Contains(keyword))
@@ -143,7 +145,7 @@ namespace QuanLyThietBi
                 if (cboHanhDong.SelectedItem != null && !string.IsNullOrEmpty(cboHanhDong.SelectedItem.ToString()))
                 {
                     string hanhDong = cboHanhDong.SelectedItem.ToString();
-                    filtered = filtered.Where(ls => ls.HanhDong == hanhDong).ToList();
+                    filtered = filtered.Where(ls => ls.TenHanhDong == hanhDong).ToList();
                 }
 
                 // Filter theo ngày
@@ -252,7 +254,7 @@ namespace QuanLyThietBi
             string detail = $"CHI TIẾT LỊCH SỮ\n\n";
             detail += $"ID: {lichSu.ID}\n";
             detail += $"Người thực hiện: {lichSu.TenUser}\n";
-            detail += $"Hành động: {lichSu.HanhDong}\n";
+            detail += $"Hành động: {lichSu.TenHanhDong}\n";
             detail += $"Bảng tác động: {lichSu.BangTacDong}\n";
             detail += $"ID bản ghi: {lichSu.BanGhiID}\n";
             detail += $"Thời điểm: {lichSu.ThoiDiem:dd/MM/yyyy HH:mm:ss}\n\n";

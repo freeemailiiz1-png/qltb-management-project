@@ -10,7 +10,7 @@ namespace QuanLyThietBi.DTO
     {
         public int ID { get; set; }
         public int? UserID { get; set; }
-        public string HanhDong { get; set; }  // Tên hành động (Thêm, Sửa, Xóa...)
+        public int? HanhDongID { get; set; }  // ✅ THAY ĐỔI: Từ string thành int (ID từ tblHanhDong)
         public string BangTacDong { get; set; }  // Tên bảng (tblThietBi, tblCanBo...)
         public int? BanGhiID { get; set; }  // ID của bản ghi bị tác động
         public DateTime? ThoiDiem { get; set; }
@@ -19,5 +19,6 @@ namespace QuanLyThietBi.DTO
 
         // Thuộc tính bổ sung để hiển thị
         public string TenUser { get; set; }  // Tên user thực hiện
+        public string TenHanhDong { get; set; }  // ✅ THÊM: Tên hành động (từ tblHanhDong)
     }
 }

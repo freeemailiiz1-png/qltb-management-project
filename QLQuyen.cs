@@ -102,7 +102,8 @@ namespace QuanLyThietBi
 
             if (result == DialogResult.Yes)
             {
-                bool success = quyenDAO.Delete(selectedID);
+                // ✅ QUAN TRỌNG: Truyền UserID từ SessionManager
+                bool success = quyenDAO.Delete(selectedID, SessionManager.GetCurrentUserID());
                 if (success)
                 {
                     MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -130,7 +131,7 @@ namespace QuanLyThietBi
                 MessageBox.Show("Không có kết quả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            dgvQuyen.DataSource = null;
+            //dgvQuyen.DataSource = null;
             dgvQuyen.DataSource = result;
         }
 

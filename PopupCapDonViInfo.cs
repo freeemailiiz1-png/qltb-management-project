@@ -1,4 +1,5 @@
-﻿using QuanLyThietBi.DAO;
+﻿using QuanLyThietBi.Common;
+using QuanLyThietBi.DAO;
 using QuanLyThietBi.DTO;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,10 @@ namespace QuanLyThietBi
             CapDonVi = new CapDonVi
             {
                 ID = _currentCapDonVi?.ID ?? 0,
-                TenCapDV = txtTenCapDonVi.Text
+                TenCapDV = txtTenCapDonVi.Text,
+
+                // ✅ QUAN TRỌNG: Truyền UserID từ SessionManager
+                UserID = SessionManager.GetCurrentUserID()
             };
 
             bool result;

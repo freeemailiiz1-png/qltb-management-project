@@ -1,4 +1,5 @@
-﻿using QuanLyThietBi.DAO;
+﻿using QuanLyThietBi.Common;
+using QuanLyThietBi.DAO;
 using QuanLyThietBi.DTO;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,18 @@ namespace QuanLyThietBi
             user = dao.Login(txtUsername.Text, txtPassword.Text);
             if (user != null)
             {
+                // Lưu thông tin user vào Session
+                SessionManager.SetCurrentUser(user);
+
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 QLUser mainForm = new QLUser();
-                mainForm.FormClosed += (s, args) => this.Show(); // Hiện lại form đăng nhập khi form chính đóng
+                mainForm.FormClosed += (s, args) =>
+                {
+                    // Đăng xuất khi đóng form chính
+                    SessionManager.Logout();
+                    this.Show();
+                };
                 mainForm.Show();
             }
             else

@@ -76,7 +76,8 @@ namespace QuanLyThietBi
 
             if (result == DialogResult.Yes)
             {
-                bool success = capDonViDAO.Delete(selectedID);
+                // ✅ QUAN TRỌNG: Truyền UserID từ SessionManager
+                bool success = capDonViDAO.Delete(selectedID, SessionManager.GetCurrentUserID());
                 if (success)
                 {
                     MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
